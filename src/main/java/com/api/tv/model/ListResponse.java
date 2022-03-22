@@ -1,23 +1,27 @@
 package com.api.tv.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ListResponse {
 
-	private String createdBy;
-	private String description;
-	private int favoriteCount;
-	private String id;
-	private int itemCount;
-	private String name;
-	private String posterPath;
-	private String language;
-	
-	private List<Item> items;
-	
+	private @JsonProperty("created_by") String createdBy;
+	private @JsonProperty("description") String description;
+	private @JsonProperty("favorite_count") int favoriteCount;
+	private @JsonProperty("id") String id;
+	private @JsonProperty("item_count") int itemCount;
+	private @JsonProperty("name") String name;
+	private @JsonProperty("poster_path") String posterPath;
+	private @JsonProperty("iso_639_1") String language;
+
+	private @JsonProperty("items") List<Item> items;
+
 	public ListResponse() {
-		
+
 		items = new ArrayList<>();
 	}
 
@@ -92,5 +96,5 @@ public class ListResponse {
 	public void setItems(List<Item> items) {
 		this.items = items;
 	}
-	
+
 }
