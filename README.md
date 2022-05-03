@@ -16,12 +16,12 @@ In the project root, JHipster generates configuration files for tools like git, 
   - `tools` : package for tools such as TmdbApiConfiguration and GenericApiCall.
   - `web.rest` : package for REST controllers.
 
-##Roadmap:
+## Roadmap:
 - Confirmer la bonne direction de la première itération; 
 - Rajouter petit-à-petit d’autres fonctionnalités en utilisant les mêmes techniques (recommandées);
 - Optimiser au maximum possible le code écrit;
 - Tester les WS développés (introduction à Spring Security et les autres modules);
 - Application front-end ? React ? Angular ?
 
-###Trello link:
+### Trello link:
 https://trello.com/b/0Wri7XPe/tmdb-java-api
