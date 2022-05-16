@@ -2,11 +2,10 @@ package com.api.tv.web.rest;
 
 import java.io.IOException;
 
-import javax.websocket.server.PathParam;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,11 +17,15 @@ import com.api.tv.service.ListService;
 public class ListController {
 
 	@Autowired
-	private ListService listService;
-	
-	@GetMapping("/{listId}")
-	public ResponseEntity<ListResponse> getListById(@PathParam("listId") String id) {
-		
+	private final ListService listService;
+
+    public ListController(ListService listService) {
+        this.listService = listService;
+    }
+
+    @GetMapping("/{listId}/details")
+	public ResponseEntity<ListResponse> getListById(@PathVariable("listId") String id) {
+
 		try {
 			ListResponse response = listService.getList(id);
 			return ResponseEntity.ok(response);

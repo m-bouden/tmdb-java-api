@@ -3,12 +3,13 @@ package com.api.tv.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Item {
+public class Item implements Serializable {
 
 	private @JsonProperty("poster_path") String posterPath;
 	private @JsonProperty("adult") boolean adult;

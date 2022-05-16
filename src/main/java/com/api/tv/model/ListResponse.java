@@ -3,11 +3,12 @@ package com.api.tv.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ListResponse {
+public class ListResponse implements Serializable {
 
 	private @JsonProperty("created_by") String createdBy;
 	private @JsonProperty("description") String description;

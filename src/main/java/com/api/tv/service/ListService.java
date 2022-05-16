@@ -1,21 +1,13 @@
 package com.api.tv.service;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.json.JacksonJsonParser;
-import org.springframework.boot.json.JsonParser;
 import org.springframework.stereotype.Service;
 
-import com.api.tv.model.Item;
 import com.api.tv.model.ListResponse;
-import com.api.tv.model.MediaType;
 import com.api.tv.tools.GenericApiCall;
 
 @Service
@@ -25,15 +17,17 @@ public class ListService {
 	protected Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
-	private GenericApiCall apiCall;
+	private final GenericApiCall apiCall;
 
-	public ListService() {
+	public ListService(GenericApiCall apiCall) {
 
-	}
+        this.apiCall = apiCall;
+    }
 
 	public ListResponse getList(String listId) throws IOException {
 
-		return (ListResponse) apiCall.consumeTemplate(ListResponse.class, METHOD_CALL, listId).getBody();
+        log.info("Calling list service for listId = {}.", listId);
+		return (ListResponse) apiCall.consumeGetTemplate(ListResponse.class, METHOD_CALL, listId).getBody();
 	}
 
 }
