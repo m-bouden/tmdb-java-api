@@ -1,13 +1,9 @@
 package com.api.tv.tools;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.Scanner;
-
-import javax.net.ssl.HttpsURLConnection;
-
-import com.api.tv.model.ListResponse;
+import com.api.tv.model.RateRequest;
+import org.apache.commons.compress.harmony.pack200.NewAttributeBands;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -16,14 +12,15 @@ import org.springframework.web.client.RestTemplate;
 public class GenericApiCall {
 
     @Autowired
-    private RestTemplate template;
+    private final RestTemplate template;
 	private static final String BASE_URL = "https://api.themoviedb.org/3/";
 
-	public GenericApiCall() {
+	public GenericApiCall(RestTemplate template) {
 
-	}
+        this.template = template;
+    }
 
-    public ResponseEntity consumeTemplate(Class clazz, String... params) {
+    public ResponseEntity<?> consumeGetTemplate(Class<?> clazz, String... params) {
         return template.getForEntity(buildURL(params), clazz);
     }
 
@@ -41,4 +38,9 @@ public class GenericApiCall {
 
 		return uri.toString();
 	}
+
+    public ResponseEntity<?> consumePostTemplate(Class<?> clazz, RateRequest rate, String... params) {
+        HttpEntity<RateRequest> rateRequest  = new HttpEntity<>(rate);
+        return template.postForEntity(buildURL(params), rateRequest, clazz);
+    }
 }
