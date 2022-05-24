@@ -28,12 +28,31 @@ public class MovieResponse implements Serializable {
     private @JsonProperty("production_countries") List<ProductionCountry> productionCountries;
     private @JsonProperty("spoken_languages") List<Language> spokenLanguages;
     private @JsonProperty("genres") List<Genre> genres;
+    private @JsonProperty("video") boolean video;
+    private @JsonProperty("genre_ids") List<String> genreIds;
 
     public MovieResponse() {
         productionCompanies = new ArrayList<>();
         productionCountries = new ArrayList<>();
         spokenLanguages = new ArrayList<>();
         genres = new ArrayList<>();
+        genreIds = new ArrayList<>();
+    }
+
+    public List<String> getGenreIds() {
+        return genreIds;
+    }
+
+    public void setGenreIds(List<String> genreIds) {
+        this.genreIds = genreIds;
+    }
+
+    public boolean isVideo() {
+        return video;
+    }
+
+    public void setVideo(boolean video) {
+        this.video = video;
     }
 
     public int getId() {
