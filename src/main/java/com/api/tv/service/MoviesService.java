@@ -1,9 +1,12 @@
 package com.api.tv.service;
 
+import com.api.tv.dto.MovieDto;
 import com.api.tv.model.MovieResponse;
 import com.api.tv.model.RateRequest;
 import com.api.tv.model.RateResponse;
+import com.api.tv.repository.MovieRepository;
 import com.api.tv.tools.GenericApiCall;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,22 +18,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 public class MoviesService {
 
     private final static String METHOD_CALL = "movie";
-    protected Logger log = LoggerFactory.getLogger(this.getClass());
+    private final GenericApiCall apiCall;
+    private final MovieRepository movieRepository;
 
     @Autowired
-    private final GenericApiCall apiCall;
-
-    public MoviesService(GenericApiCall apiCall) {
+    public MoviesService(GenericApiCall apiCall, MovieRepository movieRepository) {
         this.apiCall = apiCall;
+        this.movieRepository = movieRepository;
     }
 
     public MovieResponse findMovieById(String movieId) throws IOException {
 
         log.info("Calling movie service for movieId = {}." , movieId);
-        return (MovieResponse) apiCall.consumeGetTemplate(MovieResponse.class, METHOD_CALL, movieId).getBody();
+        MovieResponse response = (MovieResponse) apiCall.consumeGetTemplate(MovieResponse.class, METHOD_CALL, movieId).getBody();
+        if (response != null) {
+            movieRepository.save(new MovieDto().toMovie(response));
+        }
+        return response;
     }
 
     public RateResponse rateMovie(String movieId, RateRequest rate) throws IOException {
