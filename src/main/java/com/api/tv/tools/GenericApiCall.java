@@ -1,8 +1,9 @@
 package com.api.tv.tools;
 
 import com.api.tv.model.RateRequest;
-import org.apache.commons.compress.harmony.pack200.NewAttributeBands;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -11,13 +12,18 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class GenericApiCall {
 
-    @Autowired
     private final RestTemplate template;
 	private static final String BASE_URL = "https://api.themoviedb.org/3/";
 
-	public GenericApiCall(RestTemplate template) {
+    @Bean
+    public RestTemplate restTemplate() {
 
-        this.template = template;
+        return new RestTemplateBuilder().build();
+    }
+
+    @Autowired
+	public GenericApiCall() {
+        template = restTemplate();
     }
 
     public ResponseEntity<?> consumeGetTemplate(Class<?> clazz, String... params) {

@@ -2,6 +2,7 @@ package com.api.tv.web.rest;
 
 import com.api.tv.model.RateRequest;
 import com.api.tv.model.RateResponse;
+import com.api.tv.model.SeasonResponse;
 import com.api.tv.model.TvShowResponse;
 import com.api.tv.service.TvShowService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +16,9 @@ import java.util.List;
 @RequestMapping("tv")
 public class TvShowController {
 
-    @Autowired
     private final TvShowService tvShowService;
 
+    @Autowired
     public TvShowController(TvShowService tvShowService) {
         this.tvShowService = tvShowService;
     }
@@ -58,9 +59,20 @@ public class TvShowController {
     }
 
     @GetMapping("/discover")
-    public ResponseEntity<List<TvShowResponse>> discoverMovies() {
+    public ResponseEntity<List<TvShowResponse>> discoverShows() {
         try {
-            List<TvShowResponse> response = tvShowService.discoverMovies();
+            List<TvShowResponse> response = tvShowService.discoverShows();
+            return ResponseEntity.ok(response);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/{showId}/season/{number}")
+    public ResponseEntity<SeasonResponse> getSeasonDetails(@PathVariable("showId") String showId, @PathVariable("number") String seasonNumber) {
+        try {
+            SeasonResponse response = tvShowService.getSeasonDetails(showId, seasonNumber);
             return ResponseEntity.ok(response);
         } catch (IOException e) {
             e.printStackTrace();
