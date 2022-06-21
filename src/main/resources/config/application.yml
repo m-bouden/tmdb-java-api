@@ -127,6 +127,14 @@ spring:
   output:
     ansi:
       console-available: true
+  datasource:
+    url:
+      jdbc:h2:mem: tmdb
+    username: admin
+    password: admin
+    driverClassName: org.h2.Driver
+    jpa:
+      spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
 
 server:
   servlet:
