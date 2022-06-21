@@ -2,6 +2,7 @@ package com.api.tv.service;
 
 import java.io.IOException;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,14 +12,13 @@ import com.api.tv.model.ListResponse;
 import com.api.tv.tools.GenericApiCall;
 
 @Service
+@Slf4j
 public class ListService {
 
 	private final static String METHOD_CALL = "list";
-	protected Logger log = LoggerFactory.getLogger(this.getClass());
-
-	@Autowired
 	private final GenericApiCall apiCall;
 
+    @Autowired
 	public ListService(GenericApiCall apiCall) {
 
         this.apiCall = apiCall;
