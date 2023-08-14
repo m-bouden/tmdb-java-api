@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 
 @Service
-@Slf4j
 public class TrendingService {
 
     private final static String METHOD_CALL = "trending";
@@ -24,7 +23,6 @@ public class TrendingService {
 
     public TrendingResponse findTrending(String type, String period) throws IOException {
 
-        log.info("Calling trending movies/shows/other service.");
         return (TrendingResponse) apiCall.consumeGetTemplate(TrendingResponse.class, METHOD_CALL, type, period).getBody();
     }
 }

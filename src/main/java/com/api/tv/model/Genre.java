@@ -9,12 +9,28 @@ import lombok.Setter;
 import java.io.Serializable;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-@Getter
-@Setter
-@NoArgsConstructor
 public class Genre implements Serializable {
 
     private @JsonProperty("id") int id;
     private @JsonProperty("name") String name;
 
+    public Genre() {
+
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

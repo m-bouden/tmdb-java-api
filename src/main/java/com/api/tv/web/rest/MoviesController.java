@@ -1,5 +1,6 @@
 package com.api.tv.web.rest;
 
+import com.api.tv.model.GenresResponse;
 import com.api.tv.model.MovieResponse;
 import com.api.tv.model.RateRequest;
 import com.api.tv.model.RateResponse;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
@@ -23,10 +25,10 @@ public class MoviesController {
     }
 
     @GetMapping("/{movieId}/details")
-    public ResponseEntity<MovieResponse> getMovieById(@PathVariable("movieId") String movieId) {
+    public ResponseEntity<MovieResponse> getMovieById(@PathVariable("movieId") Integer movieId) {
 
         try {
-            MovieResponse response = moviesService.findMovieById(movieId);
+            MovieResponse response = moviesService.findMovieById(String.valueOf(movieId));
             return ResponseEntity.ok(response);
         } catch (IOException e) {
             e.printStackTrace();
@@ -35,10 +37,10 @@ public class MoviesController {
     }
 
     @PostMapping("/{movieId}/rate")
-    public ResponseEntity<RateResponse> rateMovie(@PathVariable("movieId") String movieId, @RequestBody(required = true) RateRequest rate) {
+    public ResponseEntity<RateResponse> rateMovie(@PathVariable("movieId") Integer movieId, @RequestBody(required = true) @Valid RateRequest rate) {
 
         try {
-            RateResponse response = moviesService.rateMovie(movieId, rate);
+            RateResponse response = moviesService.rateMovie(String.valueOf(movieId), rate);
             return ResponseEntity.ok(response);
         } catch (IOException e) {
             e.printStackTrace();
@@ -47,9 +49,9 @@ public class MoviesController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<List<MovieResponse>> getMoviesList() {
+    public ResponseEntity<GenresResponse> getMoviesList() {
         try {
-            List<MovieResponse> response = moviesService.getList();
+            GenresResponse response = moviesService.getList();
             return ResponseEntity.ok(response);
         } catch (IOException e) {
             e.printStackTrace();

@@ -7,16 +7,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class MovieDto {
 
-    public Movie toMovie(MovieResponse response) {
+    public static Movie toMovie(MovieResponse response) {
 
-        Movie movie = new Movie()
-            .title(response.getOriginalTitle())
-            .language(response.getOriginalLanguage())
-            .status(response.getStatus())
-            .voteCount(response.getVoteCount())
-            .voteAverage(response.getVoteAverage())
-            .adult(response.isAdult());
-
+        Movie movie = new Movie();
+        movie.setId(response.getId());
+        movie.setLanguage(response.getOriginalLanguage());
+        movie.setAdult(response.isAdult());
+        movie.setStatus(response.getStatus());
+        movie.setVoteAverage(response.getVoteAverage());
+        movie.setVoteCount(response.getVoteCount());
         return movie;
     }
 }

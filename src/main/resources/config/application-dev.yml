@@ -54,6 +54,13 @@ spring:
     locator:
       discovery:
         enabled: true
+  security:
+    user:
+      name: admin
+      password: admin
+      roles:
+        - ADMIN
+        - USER
 
 server:
   port: 8080

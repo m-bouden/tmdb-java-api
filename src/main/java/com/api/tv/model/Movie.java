@@ -11,8 +11,6 @@ import java.util.Set;
 
 @Entity
 @Table(name = "MOVIES")
-@Getter @Setter @NoArgsConstructor
-@Accessors(fluent = true)
 public class Movie implements Serializable {
 
     @Id
@@ -27,4 +25,72 @@ public class Movie implements Serializable {
 
     @OneToMany(mappedBy = "id")
     private Set<Rating> ratings;
+
+    public Movie() {
+
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
+    public double getVoteAverage() {
+        return voteAverage;
+    }
+
+    public void setVoteAverage(double voteAverage) {
+        this.voteAverage = voteAverage;
+    }
+
+    public int getVoteCount() {
+        return voteCount;
+    }
+
+    public void setVoteCount(int voteCount) {
+        this.voteCount = voteCount;
+    }
+
+    public boolean isAdult() {
+        return adult;
+    }
+
+    public void setAdult(boolean adult) {
+        this.adult = adult;
+    }
+
+    public Set<Rating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(Set<Rating> ratings) {
+        this.ratings = ratings;
+    }
 }

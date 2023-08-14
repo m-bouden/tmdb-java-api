@@ -12,7 +12,6 @@ import com.api.tv.model.ListResponse;
 import com.api.tv.tools.GenericApiCall;
 
 @Service
-@Slf4j
 public class ListService {
 
 	private final static String METHOD_CALL = "list";
@@ -26,8 +25,7 @@ public class ListService {
 
 	public ListResponse getList(String listId) throws IOException {
 
-        log.info("Calling list service for listId = {}.", listId);
-		return (ListResponse) apiCall.consumeGetTemplate(ListResponse.class, METHOD_CALL, listId).getBody();
+        return (ListResponse) apiCall.consumeGetTemplate(ListResponse.class, METHOD_CALL, listId).getBody();
 	}
 
 }

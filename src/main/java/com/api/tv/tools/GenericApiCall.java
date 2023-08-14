@@ -5,8 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.stereotype.Component;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 @Component
@@ -27,7 +31,11 @@ public class GenericApiCall {
     }
 
     public ResponseEntity<?> consumeGetTemplate(Class<?> clazz, String... params) {
-        return template.getForEntity(buildURL(params), clazz);
+
+        MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
+        headers.add("Content-Type", "application/json");
+        headers.add("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhMzQ2MGE3NTAwNjQ2NzkwZjhjNTkyYzAzYjNkZDdhYyIsInN1YiI6IjYyMjljOTQ5MTA5Y2QwMDAxYmYyZGI0MiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.1YRvb85pOPujEzk9-ivB5YZTHONOfC-YoEjeNYoWfzs");
+        return template.exchange(buildURL(params), HttpMethod.GET, new HttpEntity<>(headers), clazz);
     }
 
 	private String buildURL(String... strings) {
@@ -39,14 +47,19 @@ public class GenericApiCall {
 				uri.append("/");
 			}
 		}
-		uri.append("?api_key=").append(TmdbApiConfiguration.getApiKey());
-		uri.append("&language=").append(TmdbApiConfiguration.getDefaultLanguage());
+		uri.append("?language=").append(TmdbApiConfiguration.getDefaultLanguage());
 
 		return uri.toString();
 	}
 
     public ResponseEntity<?> consumePostTemplate(Class<?> clazz, RateRequest rate, String... params) {
-        HttpEntity<RateRequest> rateRequest  = new HttpEntity<>(rate);
+
+        MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
+        headers.add("Content-Type", "application/json");
+        headers.add("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhMzQ2MGE3NTAwNjQ2NzkwZjhjNTkyYzAzYjNkZDdhYyIsInN1YiI6IjYyMjljOTQ5MTA5Y2QwMDAxYmYyZGI0MiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.1YRvb85pOPujEzk9-ivB5YZTHONOfC-YoEjeNYoWfzs");
+        template.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+
+        HttpEntity<RateRequest> rateRequest  = new HttpEntity<>(rate, headers);
         return template.postForEntity(buildURL(params), rateRequest, clazz);
     }
 }
