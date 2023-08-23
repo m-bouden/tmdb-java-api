@@ -96,7 +96,7 @@ public class MovieServiceTest {
 
         GenresResponse response = null;
         try {
-            response = service.getList();
+            response = service.getList("");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

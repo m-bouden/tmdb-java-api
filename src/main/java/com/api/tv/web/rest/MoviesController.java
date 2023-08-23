@@ -1,17 +1,19 @@
 package com.api.tv.web.rest;
 
-import com.api.tv.model.GenresResponse;
-import com.api.tv.model.MovieResponse;
-import com.api.tv.model.RateRequest;
-import com.api.tv.model.RateResponse;
+import com.api.tv.model.*;
 import com.api.tv.service.MoviesService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("movie")
@@ -49,9 +51,9 @@ public class MoviesController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<GenresResponse> getMoviesList() {
+    public ResponseEntity<GenresResponse> getMoviesList(@RequestParam(name = "filter", required = false) String filter) {
         try {
-            GenresResponse response = moviesService.getList();
+            GenresResponse response = moviesService.getList(filter);
             return ResponseEntity.ok(response);
         } catch (IOException e) {
             e.printStackTrace();

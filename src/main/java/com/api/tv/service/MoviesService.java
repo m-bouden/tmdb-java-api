@@ -4,12 +4,15 @@ import com.api.tv.dto.MovieDto;
 import com.api.tv.model.*;
 import com.api.tv.repository.MovieRepository;
 import com.api.tv.tools.GenericApiCall;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 @Service
 public class MoviesService {
@@ -38,9 +41,18 @@ public class MoviesService {
         return (RateResponse) apiCall.consumePostTemplate(RateResponse.class, rate, METHOD_CALL, movieId, "rating").getBody();
     }
 
-    public GenresResponse getList() throws IOException {
+    public GenresResponse getList(String filter) throws IOException {
 
-        return (GenresResponse) apiCall.consumeGetTemplate(GenresResponse.class, "genre", METHOD_CALL, "list").getBody();
+        GenresResponse response = (GenresResponse) apiCall.consumeGetTemplate(GenresResponse.class, "genre", METHOD_CALL, "list").getBody();
+
+        if (StringUtils.isNotBlank(filter)) {
+            Predicate<Genre> equalsAction = x -> x.getName().equalsIgnoreCase(filter);
+            response.setGenres(
+                response.getGenres().stream()
+                    .filter(equalsAction)
+                    .collect(Collectors.toList()));
+        }
+        return response;
     }
 
     public List<MovieResponse> discoverMovies() throws IOException {
